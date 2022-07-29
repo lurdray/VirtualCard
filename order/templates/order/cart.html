@@ -1,0 +1,165 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<body>
+    <style type="text/css">
+       
+.color-content{
+    margin-top: 3.2rem;
+}
+.color-content h3{
+    text-transform: uppercase;
+    font-size: 1.6rem;
+}
+.color{
+    width: 50px;
+    height: 50px;
+    background: none;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    margin-right: 12px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+}
+.color-black{
+    background:linear-gradient(0deg, rgba(33, 36, 41, 0.1), rgba(33, 36, 41, 0.1)), url(http://127.0.0.1:8000/static/assets/img/Ellipse%2520386.png); background-size:cover;
+    background-position: center;
+}
+.color-blue{
+    background:linear-gradient(0deg, rgba(33, 36, 41, 0.1), rgba(33, 36, 41, 0.1)), url(http://127.0.0.1:8000/static/assets/img/Ellipse%2520387.png); background-size:cover;
+    background-position: center;
+}
+.color-grey{
+
+    background-image: linear-gradient(#a1a1a1, #737373);
+}
+
+.color-red{
+    background-color: #8b0516;
+}
+.color-white{
+    background:linear-gradient(0deg, rgba(33, 36, 41, 0.1), rgba(33, 36, 41, 0.1)), url(http://127.0.0.1:8000/static/assets/img/Ellipse%2520387.png); background-size:cover;
+    background-position: center;
+}
+.color:hover{
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+}
+.active-color{
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+}
+.color-groups{
+    padding: 1rem 0;
+    display: flex;
+}
+
+/* Media Queries */
+@media screen and (max-width: 992px){
+    .navbar{
+        padding-bottom: 3rem;
+    }
+    .banner-content{
+        grid-template-columns: 100%;
+        text-align: center;
+    }
+    .banner-left h2{
+        font-size: 2rem;
+    }
+    .banner-left span{
+        font-size: 2.8rem;
+    }
+    .color-groups{
+        display: flex;
+        justify-content: center;
+    }
+    .color:last-child{
+        margin-right: 0;
+    }
+}
+
+    </style>
+    {% include 'app_user/header.html' %}
+    <div class="container">
+        <div class="row vh-75 my-5">
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="text-center">
+                    <h1 class="fw-700 fs-32 mb-5">Customize your card</h1>
+                    
+                    
+                    <div class="mb-3 banner-right"><img id="card-change" src="{% static 'assets/images/card_black.png' %}" style="width: 50%;height: auto;"></div><span class="fw-400 fs-16">{{ card.name }}</span>
+                    
+        <div class="d-flex justify-content-center my-5 gap-4">
+            
+              <div class = "color-groups">
+                
+                <div class ="color color-black active-color"></div>
+                <div class ="color color-grey"></div>
+                <div class ="color color-white"></div>
+               
+              </div>
+           
+        </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <form class="theme-form login-form" style="border-radius:25px" method="post">
+                    {% csrf_token %}
+                <div class="w-100">
+                    <div class="table-responsive border-bottom">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                     
+                                    <td class="d-flex align-items-center fw-600 fs-16"><img class="me-2" src="{% static 'assets/img/Ellipse%20386.png' %}" style="width: 32px;height: 32px;">ThisPass Black Card</td>
+                                    <td>
+                                        
+                                        <div class="d-flex justify-content-center align-items-center control p-0 form-group" data-quantity=""><button class="form-control prc btn d-flex justify-content-center align-items-center border-0" type="button" data-quantity-minus=""><svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
+                                                    <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+                                                    <path class="form-control prc" d="M400 288h-352c-17.69 0-32-14.32-32-32.01s14.31-31.99 32-31.99h352c17.69 0 32 14.3 32 31.99S417.7 288 400 288z"></path>
+                                                </svg></button><input  class=" prc d-flex justify-content-center align-content-center py-2 text-center bg-transparent" type="number" data-quantity-target="" value="0" step="1" min="0" max="" name="quantity"><button class="prc btn d-flex justify-content-center align-items-center border-0" type="button" data-quantity-plus=""><svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
+                                                    <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+                                                    
+                                                    <path class="form-control prc" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>
+                                                </svg></button></div>
+                                        
+                                    </td>
+                                </tr>
+                                    
+                                
+                                            <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+                                            <script>
+                                                $('.form-group').on('input', '.prc', function(){
+                                                    var totalSum = 0;
+                                                    $('.form-group .prc').each(function() {
+                                                        var inputVal = $(this).val();
+                                                        if($.isNumeric(inputVal)){
+                                                            totalSum += parseFloat(inputVal) * 2300;
+                                                        }
+                                                        $('#result').text(totalSum);
+                                                    })
+                                                });
+                                            </script>
+                                            
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between fw-600 fs-16 my-5 form-group" style="color: #757575;"><span class="fw-600 fs-16">Subtotal</span><span>NGN  <output id="result"></output>.00</span></div><button class="btn btn-dark d-block w-100 fw-600 fs-14 py-2" role="button" type="submit">Proceed</button>
+            </form>
+            </div>
+           
+        </div>
+        
+    </div>
+{% endblock %}
