@@ -30,16 +30,16 @@
 <script>
     function payWithPaystack(){
       var handler = PaystackPop.setup({
-        key: 'pk_test_63f455ebba60b2058709180e31a9936c418588d7',
-        email: {{ order.app_user.user.email }},
-        amount: {{ order.total }},
+        key: 'pk_test_33ebd1961880161ee028ef962b6c34eae07b5718',
+        email: '{{ order.app_user.user.email }}',
+        amount: {% widthratio order.total 1 100 %},
         ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
         metadata: {
            custom_fields: [
               {
-                  display_name: {{ order.app_user.user.email }},
-                  variable_name: {{ order.app_user.user.email }},
-                  value: {{ order.app_user.phone_no }}
+                  display_name: '{{ order.app_user.user.email }}',
+                  variable_name: '{{ order.app_user.user.email }}',
+                  value: '{{ order.app_user.phone_no }}'
               }
            ]
         },
