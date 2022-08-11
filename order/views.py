@@ -119,15 +119,17 @@ def ShippingView(request):
 			'form':'form',}
 		return render(request, "order/shipping.html", context )
 
-def CompleteView(request):
+def CompleteView(request, id):
 	app_user = AppUser.objects.get(user__pk=request.user.id)
 	if request.method == "POST":
 		pass
 	else:
-		context = {"app_user":app_user}
+		card = CardInfo.objects.get(id=id)
+		context = {"app_user":app_user, "card":card}
 		return render(request, "order/order_complete.html", context )
 
-def UpdateAppuserView(request):
+def UpdateAppuserView(request, order_id):
+	order = Order.objects.get(id=order_id)
 	app_user = AppUser.objects.get(user__pk=request.user.id)
 	if request.method == "POST":
 		#card primary info
@@ -183,18 +185,34 @@ def UpdateAppuserView(request):
 	
 			
 		
-		return HttpResponseRedirect(reverse("order:dashboard"))
+		return HttpResponseRedirect(reverse("order:confirm"))
 			
 	else:
 		app_user = AppUser.objects.get(user__pk=request.user.id)
 
-		context = {"app_user":app_user}
+		context = {"app_user":app_user, "order":order}
 		return render(request, "order/update_profile.html", context )
 
-def DashboardView(request):
+def ConfirmView(request):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	card_info = CardInfo.objects.all().order_by('-id')[:1]
+	if request.method == "POST":
+		pass
+
+
+	else:
+
+
+		context = {"app_user": app_user, "card_info":card_info}
+		return render(request, "order/confirm_details.html", context )
+
+
+def DashboardView(request, id):
+	order = Order.objects.all()
+	card = CardInfo.objects.get(id=id)
 	app_user = AppUser.objects.get(user__pk=request.user.id)
 	if request.method == "POST":
-		
+		app_user = AppUser.objects.get(user__pk=request.user.id)
 		card_first_name = request.POST.get("card_first_name")
 		card_last_name = request.POST.get("card_last_name")
 		card_email = request.POST.get("card_email")
@@ -215,46 +233,37 @@ def DashboardView(request):
 		linkedin_link = request.POST.get("linkedin_link")
 
 
-		app_user.card_first_name = card_first_name
-		app_user.card_last_name = card_last_name
+		card.card_first_name = card_first_name
+		card.card_last_name = card_last_name
 		
-		app_user.card_email = card_email
-		app_user.card_company = card_company
-		app_user.card_phone_no = card_phone_no
-		app_user.card_website = card_website
-		app_user.card_job_title = card_job_title
+		card.card_email = card_email
+		card.card_company = card_company
+		card.card_phone_no = card_phone_no
+		card.card_website = card_website
+		card.card_job_title = card_job_title
 
-		app_user.card_address = card_address
-		app_user.card_city = card_city
-		app_user.card_state = card_state
-		app_user.card_zip_code = card_zip_code
-		app_user.card_country = card_country
+		card.card_address = card_address
+		card.card_city = card_city
+		card.card_state = card_state
+		card.card_zip_code = card_zip_code
+		card.card_country = card_country
 
-		app_user.facebook_link = facebook_link
-		app_user.twitter_link = twitter_link
-		app_user.instagram_link = instagram_link
-		app_user.linkedin_link = linkedin_link
+		card.facebook_link = facebook_link
+		card.twitter_link = twitter_link
+		card.instagram_link = instagram_link
+		card.linkedin_link = linkedin_link
 
-		app_user.save()
+		card.save()
 
 		
-		return HttpResponseRedirect(reverse("order:dashboard"))
+		return HttpResponseRedirect(reverse("order:dashboard", args=[card.id]))
 
 
 	else:
-		card = CardInfo.objects.all().order_by('-id')[:1]
+		
 
-		context = {"app_user": app_user, 'card':card}
+		context = {"app_user": app_user, 'card':card, "order":order}
 		return render(request, "order/dashboard.html", context )
 
 
 
-def URLProfileView(request):
-	app_user = AppUser.objects.get(user__pk=request.user.id)
-	if request.method == "POST":
-		pass
-	else:
-
-		card = CardInfo.objects.all().order_by('-id')[:1]
-		context = {"app_user": app_user, "card":card}
-		return render(request, "order/url_profile.html", context )

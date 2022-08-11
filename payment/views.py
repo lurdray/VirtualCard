@@ -22,6 +22,7 @@ from order.models import *
 
 def PayNow(request, order_id):
     order = Order.objects.get(id=order_id)
+    app_user = AppUser.objects.get(user__pk=request.user.id)
     if request.method == "POST":
         return HttpResponseRedirect(reverse("payment:confirm_payment", args=[order.id,]))
 
@@ -29,11 +30,12 @@ def PayNow(request, order_id):
 
     else:
 
-        context = {"order": order}
+        context = {"order": order, "app_user":app_user}
         return render(request, "payment/make_payment.html", context )
 
 
 def ConfirmPayment(request, order_id):
+    app_user = AppUser.objects.get(user__pk=request.user.id)
     order = Order.objects.get(id=order_id)
     if request.method == "POST":
         
@@ -42,10 +44,10 @@ def ConfirmPayment(request, order_id):
         payment.status = True
         payment.save()
 
-        return HttpResponseRedirect(reverse("payment:success"))
+        return HttpResponseRedirect(reverse("order:update_appuser", args=[order.id,]))
 
     else:
-        context = {"order": order}
+        context = {"order": order, "app_user":app_user}
         return render(request, "payment/confirm_payment.html", context )
 
 
